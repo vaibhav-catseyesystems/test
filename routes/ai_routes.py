@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from services.ai_services import get_event_details_with_ai, get_event_listing_page_with_ai,get_events_list_with_ai
+from services.ai_services import get_event_details_with_ai, get_event_listing_page_with_ai,get_events_list_with_ai,get_event_speakers_with_ai
 import logging
 
 event_scrape_ai_bp=Blueprint('event_scrape_ai',__name__)
@@ -61,7 +61,7 @@ def get_event_speakers():
             return jsonify({"data":None,"error": "Invalid JSON format"}), 400
         markdown=str(data['markdown']).strip()
         logging.info(f"request received for /get-event-speakers-with-ai")
-        res=get_events_list_with_ai(markdown=markdown)
+        res=get_event_speakers_with_ai(markdown=markdown)
         if res["error"]:
             return jsonify({"data": None, "error": res["error"]}), 400
         return jsonify({"data": res['data'], "error": None}), 200
